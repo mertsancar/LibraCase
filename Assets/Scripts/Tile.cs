@@ -10,7 +10,6 @@ public class Tile : MonoBehaviour
     private int x;
     private int y;
     public bool IsSelected;
-    public bool IsVisited;
 
     public GameObject selectedText;
 
@@ -28,14 +27,13 @@ public class Tile : MonoBehaviour
         TryMatch(new List<Tile>{this});
     }
 
-    public void TryMatch(List<Tile> matchList)
+    private void TryMatch(List<Tile> matchList)
     {
         var currentTile = matchList.Last();
 
         foreach (var t in TileManager.instance.adjacentTiles)
         {
-            var adjacentTiles = t;
-            foreach (var offset in adjacentTiles)
+            foreach (var offset in t)
             {
                 if (matchList.Count >= 3)
                     break;
@@ -63,18 +61,6 @@ public class Tile : MonoBehaviour
         }
 
     }
-
-    private IEnumerator Match(List<Tile> matchList)
-    {
-        TileManager.instance.MatchStart();
-        foreach (var tile in matchList)
-        {
-            tile.IsSelected = false;
-            yield return new WaitForSeconds(0.1f);
-            tile.selectedText.SetActive(false);
-        }
-        TileManager.instance.MatchEnd();
-    }
     
     private bool TryAddMatchList(List<Tile> matchList, int x, int y)
     {
@@ -91,6 +77,18 @@ public class Tile : MonoBehaviour
     {
         var gridSize = GameController.instance.gridSize;
         return x >= 0 && x < gridSize && y >= 0 && y < gridSize;
+    }
+    
+    private IEnumerator Match(List<Tile> matchList)
+    {
+        TileManager.instance.MatchStart();
+        foreach (var tile in matchList)
+        {
+            tile.IsSelected = false;
+            yield return new WaitForSeconds(0.1f);
+            tile.selectedText.SetActive(false);
+        }
+        TileManager.instance.MatchEnd();
     }
 
 }

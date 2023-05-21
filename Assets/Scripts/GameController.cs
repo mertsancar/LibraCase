@@ -10,11 +10,11 @@ public class GameController : MonoBehaviour
 {
     public static GameController instance;
     
-    [NonSerialized]  public Tile[,] grid;
-    [SerializeField] public int gridSize;
-    [SerializeField] private Transform gridLayout;
+    public Tile[,] grid;
+    public int gridSize;
+    public Transform gridLayout;
 
-    [SerializeField] private GameObject tilePrefab;
+    public GameObject tilePrefab;
 
     void Start()
     {
