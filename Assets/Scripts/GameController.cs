@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -16,6 +17,10 @@ public class GameController : MonoBehaviour
 
     public GameObject tilePrefab;
 
+    public TMP_InputField gridSizeInput;
+
+    public CanvasScaler scaler;
+    
     void Start()
     {
         if (instance == null)
@@ -30,6 +35,8 @@ public class GameController : MonoBehaviour
     void Init()
     {
         gridSize = PlayerPrefs.GetInt("gridSize", 5);
+        
+        SetGridSizeInput(gridSize);
         
         grid = new Tile[gridSize, gridSize];
 
@@ -53,9 +60,20 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private int GetGridSizeInput()
+    {
+        return gridSizeInput.text == "" ? PlayerPrefs.GetInt("gridSize", 5) : int.Parse(gridSizeInput.text);
+    }
+    
+    private void SetGridSizeInput(int currentSize)
+    {
+        gridSizeInput.text = currentSize.ToString();
+    }
+    
     public void OnClickChangeGridSize()
     {
-        PlayerPrefs.SetInt("gridSize", Random.Range(3, 20));
+        var newGridSize = GetGridSizeInput();
+        PlayerPrefs.SetInt("gridSize", newGridSize);
         SceneManager.LoadScene("SampleScene");
     }
     
