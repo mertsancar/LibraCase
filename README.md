@@ -1,2 +1,2 @@
 # LibraCase
- Three-match gameplay mechanic
+ Three-match gameplay mechanic.
