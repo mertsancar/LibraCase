@@ -25,10 +25,10 @@ public class Tile : MonoBehaviour
     {
         selectedText.SetActive(true);
         IsSelected = true;
-        CheckSelectedNeighbours(new List<Tile>{this});
+        TryMatch(new List<Tile>{this});
     }
 
-    public void CheckSelectedNeighbours(List<Tile> matchList)
+    public void TryMatch(List<Tile> matchList)
     {
         var currentTile = matchList.Last();
 
@@ -59,12 +59,12 @@ public class Tile : MonoBehaviour
 
         if (matchList.Count >= 3)
         {
-            StartCoroutine(TryMatch(matchList));
+            StartCoroutine(Match(matchList));
         }
 
     }
 
-    private IEnumerator TryMatch(List<Tile> matchList)
+    private IEnumerator Match(List<Tile> matchList)
     {
         TileManager.instance.MatchStart();
         foreach (var tile in matchList)
